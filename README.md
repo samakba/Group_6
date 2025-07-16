@@ -1,25 +1,10 @@
-# Lab 5: Logout
+# Group 6: Heatmap
 
-## Preamble
+## Team members:
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
-
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
-
-We have created all the Clean Architecture classes necessary for the logout use case.
-
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
-
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
-
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+- Syed Rizvi (username: ItzDeys)
+- Raza Rehman (username: dubzsol)
+- Sam Akbarian (username: samakba)
 
 * * *
 
