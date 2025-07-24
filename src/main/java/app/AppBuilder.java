@@ -13,6 +13,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.heatmap.HeatmapController;
+import interface_adapter.heatmap.HeatmapView;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -24,6 +26,8 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.heatmap.FetchEventsInputBoundary;
+import use_case.heatmap.FetchEventsInteractor;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -99,7 +103,8 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        // Pass viewManagerModel to LoggedInView constructor
+        loggedInView = new LoggedInView(loggedInViewModel, viewManagerModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -181,5 +186,26 @@ public class AppBuilder {
         viewManagerModel.firePropertyChanged();
 
         return application;
+    }
+
+    public AppBuilder addHeatmapFeature() {
+        // Create the Heatmap View (this now works with the default constructor)
+        HeatmapView heatmapView = new HeatmapView();
+        cardPanel.add(heatmapView, "heatmap");
+
+        // Create the Interactor
+        // You'll need to replace this with your actual interactor implementation
+        FetchEventsInputBoundary fetchEventsInteractor = new FetchEventsInteractor(); 
+
+        // Create the Controller, passing it the necessary dependencies
+        HeatmapController heatmapController = new HeatmapController(fetchEventsInteractor, heatmapView);
+
+        // **This is the crucial new line that connects the view to the controller**
+        heatmapView.setController(heatmapController);
+
+        // For now, we'll add navigation to heatmap from LoggedInView
+        // You might want to add a button or menu item to navigate to heatmap
+
+        return this;
     }
 }
