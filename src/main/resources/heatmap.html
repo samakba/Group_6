@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Heatmap</title>
   <style> 
-    html, body, #map { height: 100%; margin: 0; } 
+    html, body, #map { height: 100%; margin: 0; padding: 0 }
     #map { background-color: #e0e0e0; } /* Added a background color */
     #debug { position: absolute; top: 10px; left: 10px; z-index: 1000; background: white; padding: 10px; border: 1px solid black; }
   </style>
@@ -29,7 +29,8 @@
           disableDefaultUI: false,
           zoomControl: true,
           mapTypeControl: true,
-          streetViewControl: false
+          streetViewControl: false,
+          visible: true,
         });
         
         google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
@@ -83,7 +84,104 @@
     document.getElementById('debug').innerHTML = 'Loading Google Maps API...';
   </script>
   
-  <!-- IMPORTANT: Replace YOUR_API_KEY_HERE with the new key you just created -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZFYT878bjMTjijc1oggTl2DP5lmcjTe0&libraries=visualization&callback=initMap" async defer></script>
+<!-- IMPORTANT: Replace YOUR_API_KEY_HERE with the new key you just created -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8I7L3-oAlAcrdTuxa_ymhwMcLoVVsyt4&libraries=visualization&callback=initMap" defer></script>
 </body>
+
+
+<button id="filter-btn"
+        style="position:absolute;
+        top:50px;
+        left:10px;
+        z-index:1100;
+        padding:8px 12px;"
+>Filter Strong Points</button>
+
+<script>
+let allPoints = [];  // store all heatmap points
+let filtered = false; // filter toggle state
+
+// Update this function to store points globally instead of just setting heatmap data
+function updateHeatmap(pointsJson) {
+try {
+if (!heatmap) {
+document.getElementById('debug').innerHTML = 'Heatmap not ready yet';
+return;
+}
+
+const points = JSON.parse(pointsJson);
+allPoints = points.map(p => ({
+location: new google.maps.LatLng(p.lat, p.lng),
+weight: p.weight || 0.5
+}));
+
+// Initially show all points
+heatmap.setData(allPoints);
+document.getElementById('debug').innerHTML = 'Updated successfully with ' + points.length + ' points';
+} catch (error) {
+document.getElementById('debug').innerHTML = 'Update error: ' + error.message;
+console.error('Update error:', error);
+}
+}
+
+// Filter function to show only points with weight > 0.7
+function applyFilter(format, data) {
+if (!heatmap) return;
+
+if (!filtered) {
+const filteredPoints = allPoints.filter(p => p.weight > 0.7);
+// Each Heatmap point has a weight property which controls
+// how "strong" the point appears on the heatmap
+// 1 being the strongest and 0 being the weakest
+
+heatmap.setData(filteredPoints, data);
+document.getElementById('filter-btn').innerText = 'Show All Points';
+document.getElementById('debug').innerHTML = 'Filtered to ' + filteredPoints.length + ' strong points';
+} else {
+heatmap.setData(allPoints);
+document.getElementById('filter-btn').innerText = 'Filter Strong Points';
+document.getElementById('debug').innerHTML = 'Showing all ' + allPoints.length + ' points';
+}
+filtered = !filtered;
+}
+
+// Add event listener to button after the map is initialized
+window.initMap = function() {
+try {
+document.getElementById('debug').innerHTML = 'Creating map...';
+
+map = new google.maps.Map(document.getElementById('map'), {
+center: {lat: 43.6532, lng: -79.3832},
+zoom: 13,
+mapTypeId: google.maps.MapTypeId.ROADMAP,
+disableDefaultUI: false,
+zoomControl: true,
+mapTypeControl: true,
+streetViewControl: false
+});
+
+google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
+document.getElementById('debug').innerHTML = 'Map tiles loaded, creating heatmap...';
+
+heatmap = new google.maps.visualization.HeatmapLayer({
+data: [],
+map: map,
+radius: 50,
+opacity: 0.6
+});
+
+document.getElementById('debug').innerHTML = 'Heatmap layer created! Waiting for data from Java...';
+
+// Attach click event to the filter button
+document.getElementById('filter-btn').addEventListener('click', applyFilter);
+});
+
+} catch (error) {
+document.getElementById('debug').innerHTML = 'Error: ' + error.message;
+console.error('Map initialization error:', error);
+}
+};
+</script>
+
 </html>
+
