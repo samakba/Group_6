@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Heatmap</title>
   <style> 
-    html, body, #map { height: 100%; margin: 0; } 
+    html, body, #map { height: 100%; margin: 0; padding: 0 }
     #map { background-color: #e0e0e0; } /* Added a background color */
     #debug { position: absolute; top: 10px; left: 10px; z-index: 1000; background: white; padding: 10px; border: 1px solid black; }
   </style>
@@ -29,7 +29,8 @@
           disableDefaultUI: false,
           zoomControl: true,
           mapTypeControl: true,
-          streetViewControl: false
+          streetViewControl: false,
+          visible: true,
         });
         
         google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
@@ -83,7 +84,8 @@
     document.getElementById('debug').innerHTML = 'Loading Google Maps API...';
   </script>
   
-  <!-- IMPORTANT: Replace YOUR_API_KEY_HERE with the new key you just created -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZFYT878bjMTjijc1oggTl2DP5lmcjTe0&libraries=visualization&callback=initMap" async defer></script>
+IMPORTANT: Replace YOUR_API_KEY_HERE with the new key you just created
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8I7L3-oAlAcrdTuxa_ymhwMcLoVVsyt4&libraries=visualization&callback=initMap" defer></script>
 </body>
 </html>
+
