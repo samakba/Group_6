@@ -29,27 +29,41 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .filter-button {
+        .filter-panel {
             position: absolute;
             top: 10px;
             right: 10px;
             z-index: 1001;
-            background-color: white;
+            background: white;
+            padding: 10px;
             border: 1px solid #ccc;
-            padding: 10px 15px;
             border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            font-size: 14px;
         }
-        .filter-button:hover {
-            background-color: #f0f0f0;
+        .filter-panel select,
+        .filter-panel button {
+            margin-top: 5px;
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 <div id="loading" class="loading">Loading map...</div>
-<button class="filter-button" onclick="filterHeatmap()">Filter</button>
+<div class="filter-panel">
+    <label for="weightThreshold">Min Weight:</label>
+    <select id="weightThreshold">
+        <option value="0">All</option>
+        <option value="0.2">≥ 0.2 (Weakest)</option>
+        <option value="0.5">≥ 0.5</option>
+        <option value="0.7">≥ 0.7</option>
+        <option value="0.9">≥ 0.9 (Strongest)</option>
+    </select>
+    <button onclick="filterHeatmap()">Filter</button>
+    <button onclick="resetHeatmap()">Reset</button>
+</div>
 <div id="map"></div>
 
 <script>
@@ -57,8 +71,6 @@
     let heatLayer;
     let originalPoints = [];
     let mapReady = false;
-
-    console.log("Initializing Leaflet map");
 
     function hideLoading() {
         const loading = document.getElementById('loading');
@@ -80,7 +92,6 @@
             });
 
             tileLayer.on('load', () => {
-                console.log("Tiles loaded");
                 hideLoading();
                 mapReady = true;
             });
@@ -91,27 +102,22 @@
             setTimeout(() => {
                 hideLoading();
                 mapReady = true;
-                console.log("Map initialized (fallback)");
             }, 3000);
 
         } catch (error) {
-            console.log("Error initializing map:", error.message);
             document.getElementById('loading').innerHTML = 'Error loading map: ' + error.message;
         }
     }
 
     function updateHeatmap(jsonPoints) {
-        console.log("updateHeatmap called with:", jsonPoints);
-
         if (!mapReady || !map) {
-            console.log("Map not ready, retrying...");
             setTimeout(() => updateHeatmap(jsonPoints), 1000);
             return;
         }
 
         try {
             const points = JSON.parse(jsonPoints);
-            originalPoints = points; // Save for filtering later
+            originalPoints = points;
             drawHeatLayer(points);
         } catch (error) {
             console.log("ERROR in updateHeatmap:", error.message);
@@ -152,15 +158,18 @@
     }
 
     function filterHeatmap() {
-        if (!originalPoints.length) return;
-
-        // Example filter: only include points with weight >= 0.7
-        const filtered = originalPoints.filter(p => (p.weight || 0.5) >= 0.7);
-        console.log(`Filtered from ${originalPoints.length} to ${filtered.length} points`);
+        const threshold = parseFloat(document.getElementById('weightThreshold').value);
+        const filtered = originalPoints.filter(p => (p.weight || 0.5) >= threshold);
+        console.log(`Filtered from ${originalPoints.length} to ${filtered.length} points (threshold ≥ ${threshold})`);
         drawHeatLayer(filtered);
     }
 
-    // Example usage:
+    function resetHeatmap() {
+        drawHeatLayer(originalPoints);
+        document.getElementById('weightThreshold').value = "0";
+    }
+
+    // Sample data for testing
     const sampleData = JSON.stringify([
         { lat: 43.65, lng: -79.38, weight: 0.3 },
         { lat: 43.66, lng: -79.39, weight: 0.9 },
@@ -171,13 +180,12 @@
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initializeMap();
-            setTimeout(() => updateHeatmap(sampleData), 1000); // mock loading
+            setTimeout(() => updateHeatmap(sampleData), 1000);
         });
     } else {
         initializeMap();
-        setTimeout(() => updateHeatmap(sampleData), 1000); // mock loading
+        setTimeout(() => updateHeatmap(sampleData), 1000);
     }
-
 </script>
 </body>
 </html>
