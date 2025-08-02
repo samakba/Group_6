@@ -3,7 +3,6 @@
 ## Team members:
 
 - Syed Rizvi (username: ItzDeys)
-- Raza Rehman (username: dubzsol)
 - Sam Akbarian (username: samakba)
 
 * * *
