@@ -8,6 +8,14 @@
     <artifactId>event-heatmap</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>josm</id>
+            <name>JOSM Repository</name>
+            <url>https://josm.openstreetmap.de/nexus/content/repositories/public/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.json</groupId>
@@ -15,10 +23,11 @@
             <version>20240303</version>
         </dependency>
 
+        <!-- OkHttp dependency with correct groupId and stable version -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
+            <version>4.9.3</version>
         </dependency>
         
         <dependency>
@@ -58,6 +67,13 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-swing</artifactId>
             <version>21.0.2</version>
+        </dependency>
+
+        <!-- JMapViewer dependency for OpenStreetMap integration -->
+        <dependency>
+            <groupId>org.openstreetmap.jmapviewer</groupId>
+            <artifactId>jmapviewer</artifactId>
+            <version>2.24</version>
         </dependency>
     </dependencies>
 
