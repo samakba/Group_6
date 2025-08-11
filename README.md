@@ -19,6 +19,7 @@ A Java-based desktop application that provides interactive heatmap visualization
 **Team Members:**
 - **Syed Rizvi** (GitHub: ItzDeys)
 - **Sam Akbarian** (GitHub: samakba)
+- **Reza Rehman** (GitHub: dubzsol)
 
 *Both contributors were equally involved in all aspects of the project development.*
 
