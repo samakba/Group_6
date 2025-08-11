@@ -1,165 +1,259 @@
 # Group 6: Heatmap
 
-## Team members:
+# Event Heatmap Visualization Application
 
-- Syed Rizvi (username: ItzDeys)
-- Sam Akbarian (username: samakba)
+A Java-based desktop application that provides interactive heatmap visualization of event data with user authentication and real-time data filtering capabilities.
 
-* * *
+## Table of Contents
+- [Authors and Contributors](#authors-and-contributors)
+- [Project Summary](#project-summary)
+- [Features](#features)
+- [Installation Instructions](#installation-instructions)
+- [Usage Guide](#usage-guide)
+- [License](#license)
+- [Feedback](#feedback)
+- [Contributing](#contributing)
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
+## Contributors
 
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
+**Team Members:**
+- **Syed Rizvi** (GitHub: ItzDeys)
+- **Sam Akbarian** (GitHub: samakba)
 
-* * *
+*Both contributors were equally involved in all aspects of the project development.*
 
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
+## Project Summary
 
-## Task 1: Understanding the Program
+### What This Project Does
+The Event Heatmap Visualization Application is a desktop software that allows users to visualize event data through interactive heatmaps on geographical maps. Users can authenticate into the system, view event intensity across different locations, and filter data based on various criteria.
 
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
+### Why This Project Was Made
+This project was developed to address the need for intuitive visualization of geographical event data. Traditional data tables and charts make it difficult to understand spatial patterns in event distribution and intensity. Our application solves this by providing:
+- **Visual clarity**: Immediate understanding of event concentration areas
+- **Interactive exploration**: Real-time filtering and navigation capabilities
+- **User-friendly interface**: Accessible to both technical and non-technical users
 
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
+### Problem This Project Solves
+The application is ideal for users who need to:
+- Analyze event distribution patterns across geographical areas
+- Identify hotspots and areas of low activity
+- Filter event data based on intensity thresholds
+- Present geographical data in an accessible, visual format
 
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
+## Features
 
-Run the program and make sure the signup and login Use Cases work.
+### **User Authentication System**
+- **Sign Up**: Create new user accounts with username/password
+- **Login**: Secure access with credential validation
+- **Logout**: Safe session termination
+- **Password Management**: Change password functionality
 
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
+![Login Screen Example](images/Screenshot 2025-08-11 at 11.02.29 AM.png)
+*Secure login interface with input validation*
 
-* * *
+### **Interactive Heatmap Visualization**
+- **Real-time Data Display**: Dynamic loading of event data points
+- **Color-coded Intensity**: Blue (low) to Red (high intensity) gradient
+- **Pan and Zoom**: Full map navigation capabilities
+- **OpenStreetMap Integration**: High-quality base maps
 
-**Your team will know when you are done when:**
+![HeatMap](images/Screenshot 2025-08-11 at 11.15.59 AM.png)
+*LeafLet api Map + Heatpoints can be seen on the map*
 
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
+### **Advanced Filtering Options**
+- **Weight Thresholds**: Filter events by minimum intensity (0.2 to 0.9)
+- **Real-time Updates**: Instant filter application
+- **Reset Functionality**: Return to original data view
 
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
+![Filters](images/Screenshot 2025-08-11 at 11.16.45 AM.png)
+*Advanced Filtering Options can be set as desired*
 
-* * *
 
-## Task 2: Dividing up the work
+### **Clean Architecture Implementation**
+- **Separation of Concerns**: Clear layer boundaries
+- **Testable Components**: Unit test-friendly design
+- **Maintainable Code**: Following SOLID principles
 
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
+## Installation Instructions
 
-Once the TODOs are all complete, the "Log Out" button _should_ work!
+### **System Requirements**
+- **Operating System**: Windows 10+, macOS 10.15+, or Linux Ubuntu 18.04+
+- **Java Development Kit**: JDK 24 or higher
+- **Memory**: Minimum 4GB RAM (8GB recommended)
+- **Storage**: 500MB free disk space
 
-As a team, split up the TODOs (see below) between the members of your team.
+### **Required Software and Packages**
 
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
+**Essential Downloads:**
+1. **Java JDK 24** - [Download here](https://www.oracle.com/java/technologies/downloads/)
+    - Version: 24 or higher
+    - Required for running the application
+2. **Apache Maven 3.8+** - [Download here](https://maven.apache.org/download.cgi)
+    - Version: 3.8 or higher
+    - Required for dependency management
+3. **IntelliJ IDEA** (recommended) - [Download here](https://www.jetbrains.com/idea/)
+    - Version: 2023.1 or higher
+    - Alternative: Any Java IDE supporting Maven
 
-The TODOs are summarized below (by file) to help your team decide how to split them up:
+### **Step-by-Step Installation**
 
-* * *
+**1. Clone the Repository**
 
-- `Main.java`
+[Download here](https://github.com/samakba/Group_6)
 
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
 
-* * *
+**2. Set Up Development Environment**
+- Open IntelliJ IDEA
+- Select "Open" and navigate to the cloned project folder
+- Go to `File → Project Structure`
+- Set Project SDK to Java 24
+- Ensure Module language level is set to "24 - Preview features"
 
-- `LoggedInView.java` (tip: refer to the other views for similar code)
+**3. Configure Maven Dependencies**
 
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
 
-* * *
+### **Running the Application**
 
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
+**Method 1: Through IDE**
+- Navigate to `src/main/java/app/Main.java`
+- Right-click and select "Run Main.main()"
 
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
+**Method 2: Through Maven**
 
-* * *
+**Method 3: Command Line**
 
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
 
-  - [ ] TODO: save the current username in an instance variable and add a getter.
+## Usage Guide
 
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
+### **Getting Started Tutorial**
 
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
+**Step 1: Launch and Sign Up**
+1. Run the application using any method above
+2. Click "Sign Up" on the welcome screen
+3. Enter a unique username and secure password
+4. Click "Create Account"
 
-* * *
+![Sign Up Process](images/Screenshot 2025-08-11 at 11.02.29 AM.png)
+*Creating a new user account*
 
-- `LogoutOutputData.java`
+**Step 2: Login to Access Features**
+1. Enter your credentials on the login screen
+2. Click "Login" to access the main dashboard
+3. You'll see the logged-in view with navigation options
 
-  - [ ] TODO: save the parameters in the instance variables.
+**Step 3: View Heatmap Visualization**
+1. Click "View Heatmap" button in the main interface
+2. Wait for the map to load (shows Toronto area by default)
+3. Observe color-coded event intensity points
 
-* * *
+![Heatmap View](images/Screenshot 2025-08-11 at 11.53.05 AM.png)
+*Click on view HeatMap*
 
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
+![Heatmap View](images/Screenshot 2025-08-11 at 11.15.59 AM.png)
+*Interactive heatmap showing event data intensity*
 
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
+**Step 4: Filter Data by Intensity**
 
-* * *
+1. Locate the filter panel in the top-right corner
+2. Select minimum weight threshold:
+    - "All" - Shows all data points
+    - "≥ 0.2" - Shows weakest events and above
+    - "≥ 0.5" - Shows moderate intensity and above
+    - "≥ 0.7" - Shows high intensity events
+    - "≥ 0.9" - Shows only strongest events
 
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
+![Filters](images/Screenshot 2025-08-11 at 11.16.45 AM.png)
+*Click Filter*
 
-Make sure you switch to the new branch.
 
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
-```
+3. Click "Filter" to apply changes
+4. Use "Reset" to return to original view
 
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
 
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
 
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
+**Step 5: Navigate the Map**
+- **Pan**: Click and drag to move around
+- **Zoom**: Use mouse wheel or zoom controls
+- **View Details**: Hover over colored areas to see intensity levels
 
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
+## License
+This project is licensed under the **MIT License**.
 
-Your team should spend the rest of the lab working on your project blueprint.
+MIT License
 
-* * *
+Copyright (c) 2025 Syed Rizvi & Sam Akbarian
 
-# Project Blueprint
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+**License Details:**
+- ✅ Free to use for personal and commercial purposes
+- ✅ Modification and distribution permitted
+- ✅ Attribution required
+- ❌ No warranty provided
+
+## Feedback
+We welcome all feedback to improve our Event Heatmap Visualization Application!
+### **How to Submit Feedback**
+**Primary Method: GitHub Issues**
+- Visit our [GitHub Issues page](https://github.com/samakba/Group_6)
+- Click "New Issue"
+- Select appropriate issue template:
+    - 🐛 Bug Report
+    - ✨ Feature Request
+    - ❓ Question/Support
+    - 📝 Documentation Improvement
+
+**Alternative Method: Email**
+- Send detailed feedback to: 
+- Include screenshots or error logs when relevant
+
+### **Feedback Guidelines**
+**What Makes Good Feedback:** ✅ Specific descriptions of issues or suggestions ✅ Steps to reproduce problems ✅ Screenshots or error messages ✅ Information about your system (OS, Java version) ✅ Constructive suggestions for improvement
+**What to Expect:**
+- **Response Time**: Within 2-3 business days
+- **Bug Fixes**: Critical bugs addressed within 1 week
+- **Feature Requests**: Evaluated and prioritized monthly
+- **Updates**: Progress communicated through GitHub issues
+
+**Valid Feedback Categories:**
+- Functionality bugs or errors
+- User interface/experience improvements
+- Performance optimization suggestions
+- Documentation clarifications
+- Feature enhancement requests
+
+## Contributing
+We welcome contributions from the community! Here's how you can help improve our project.
+### **How to Contribute**
+**Step 1: Fork the Repository**
+1. Visit our [GitHub repository](https://github.com/samakba/Group_6)
+2. Click the "Fork" button in the top-right corner
+3. This creates a copy of the project in your GitHub account
+
+**Step 2: Clone Your Fork**
+
+**Step 3: Create a Feature Branch**
+
+### **Development Guidelines**
+**Code Standards:**
+- Follow existing code style and formatting
+- Add comments for complex logic
+- Write unit tests for new features
+- Use meaningful variable and method names
+
