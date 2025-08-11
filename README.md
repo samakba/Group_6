@@ -48,7 +48,7 @@ The application is ideal for users who need to:
 - **Logout**: Safe session termination
 - **Password Management**: Change password functionality
 
-![Login Screen Example](images/Screenshot 2025-08-11 at 11.02.29 AM.png)
+![Login Screen Example](images/1.png)
 *Secure login interface with input validation*
 
 ### **Interactive Heatmap Visualization**
@@ -57,7 +57,7 @@ The application is ideal for users who need to:
 - **Pan and Zoom**: Full map navigation capabilities
 - **OpenStreetMap Integration**: High-quality base maps
 
-![HeatMap](images/Screenshot 2025-08-11 at 11.15.59 AM.png)
+![HeatMap](images/2.png)
 *LeafLet api Map + Heatpoints can be seen on the map*
 
 ### **Advanced Filtering Options**
@@ -65,7 +65,7 @@ The application is ideal for users who need to:
 - **Real-time Updates**: Instant filter application
 - **Reset Functionality**: Return to original data view
 
-![Filters](images/Screenshot 2025-08-11 at 11.16.45 AM.png)
+![Filters](images/3.png)
 *Advanced Filtering Options can be set as desired*
 
 
@@ -133,7 +133,7 @@ The application is ideal for users who need to:
 3. Enter a unique username and secure password
 4. Click "Create Account"
 
-![Sign Up Process](images/Screenshot 2025-08-11 at 11.02.29 AM.png)
+![Sign Up Process](images/1.png)
 *Creating a new user account*
 
 **Step 2: Login to Access Features**
@@ -146,10 +146,10 @@ The application is ideal for users who need to:
 2. Wait for the map to load (shows Toronto area by default)
 3. Observe color-coded event intensity points
 
-![Heatmap View](images/Screenshot 2025-08-11 at 11.53.05 AM.png)
+![Heatmap View](images/4.png)
 *Click on view HeatMap*
 
-![Heatmap View](images/Screenshot 2025-08-11 at 11.15.59 AM.png)
+![Heatmap View](images/2.png)
 *Interactive heatmap showing event data intensity*
 
 **Step 4: Filter Data by Intensity**
@@ -162,7 +162,7 @@ The application is ideal for users who need to:
     - "≥ 0.7" - Shows high intensity events
     - "≥ 0.9" - Shows only strongest events
 
-![Filters](images/Screenshot 2025-08-11 at 11.16.45 AM.png)
+![Filters](images/3.png)
 *Click Filter*
 
 
