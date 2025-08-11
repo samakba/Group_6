@@ -63,6 +63,9 @@
     </select>
     <button onclick="filterHeatmap()">Filter</button>
     <button onclick="resetHeatmap()">Reset</button>
+    <label for="opacitySlider" style="margin-top:8px;display:block;">Opacity: <span id="opVal">0.40</span></label>
+    <input id="opacitySlider" type="range" min="0" max="1" step="0.05" value="0.4"
+           oninput="setOpacity(parseFloat(this.value))">
 </div>
 <div id="map"></div>
 
@@ -70,7 +73,9 @@
     let map;
     let heatLayer;
     let originalPoints = [];
+    let currentPoints = [];
     let mapReady = false;
+    let currentOpacity = 0.4;
 
     function hideLoading() {
         const loading = document.getElementById('loading');
@@ -118,13 +123,14 @@
         try {
             const points = JSON.parse(jsonPoints);
             originalPoints = points;
-            drawHeatLayer(points);
+            currentPoints = points;
+            drawHeatLayer(currentPoints);
         } catch (error) {
             console.log("ERROR in updateHeatmap:", error.message);
         }
     }
 
-    function drawHeatLayer(points) {
+    function drawHeatLayer(points, preserveView) {
         if (heatLayer) map.removeLayer(heatLayer);
 
         const heatData = points.map(p => [
@@ -138,7 +144,7 @@
             blur: 15,
             maxZoom: 17,
             max: 1.0,
-            minOpacity: 0.4,
+            minOpacity: currentOpacity,
             gradient: {
                 0.0: 'blue',
                 0.2: 'cyan',
@@ -149,7 +155,7 @@
             }
         }).addTo(map);
 
-        if (points.length > 0) {
+        if (!preserveView && points.length > 0) {
             const group = new L.featureGroup(
                 points.map(p => L.marker([p.lat, p.lng]))
             );
@@ -161,12 +167,26 @@
         const threshold = parseFloat(document.getElementById('weightThreshold').value);
         const filtered = originalPoints.filter(p => (p.weight || 0.5) >= threshold);
         console.log(`Filtered from ${originalPoints.length} to ${filtered.length} points (threshold ≥ ${threshold})`);
-        drawHeatLayer(filtered);
+        currentPoints = filtered;
+        drawHeatLayer(currentPoints);
     }
 
     function resetHeatmap() {
-        drawHeatLayer(originalPoints);
+        currentPoints = originalPoints;
+        drawHeatLayer(currentPoints);
         document.getElementById('weightThreshold').value = "0";
+    }
+
+    function setOpacity(v) {
+        try {
+            const clamped = Math.max(0, Math.min(1, isFinite(v) ? v : 0.4));
+            currentOpacity = clamped;
+            const el = document.getElementById('opVal');
+            if (el) el.textContent = currentOpacity.toFixed(2);
+            if (currentPoints.length > 0) drawHeatLayer(currentPoints, true);
+        } catch (e) {
+            console.log('setOpacity error:', e.message);
+        }
     }
 
     // Sample data for testing
