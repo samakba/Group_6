@@ -57,7 +57,7 @@ public class HeatmapView extends JPanel {
 
         // Enable JavaScript console logging
         webEngine.setOnAlert(event -> System.out.println("[JS Alert] " + event.getData()));
-        
+
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
                 isMapReady = true;
@@ -76,7 +76,7 @@ public class HeatmapView extends JPanel {
 
                 SwingUtilities.invokeLater(() -> {
                     removeLoadingLabel();
-                    fetchAndDisplayData("all", "last_day");
+                    fetchAndDisplayData("all", "week");
                 });
 
             } else if (newState == Worker.State.FAILED) {
@@ -93,7 +93,7 @@ public class HeatmapView extends JPanel {
         if (url == null) {
             url = getClass().getResource("/web/heatmap.html");
         }
-        
+
         if (url != null) {
             System.out.println("HeatmapView: Attempting to load resource: " + url.toExternalForm());
             webEngine.load(url.toExternalForm());
@@ -162,7 +162,7 @@ public class HeatmapView extends JPanel {
 
         System.out.println("HeatmapView: Pushing " + points.size() + " points to JavaScript view.");
         System.out.println("HeatmapView: JSON data: " + jsonString);
-        
+
         Platform.runLater(() -> {
             try {
                 webEngine.executeScript("updateHeatmap('" + jsonString + "');");
